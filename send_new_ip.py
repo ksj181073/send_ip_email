@@ -6,6 +6,7 @@ def Main():
     from ssl import create_default_context
 
     from os import path
+    from datetime import datetime
 
     ip_file = "./current_ip.txt"
 
@@ -15,6 +16,7 @@ def Main():
     ip = get("https://api.ipify.org/").text
     cur_ip = ""
 
+    
     if not path.exists(ip_file):
         f = open(ip_file, 'w')
         f.close()
@@ -37,6 +39,10 @@ def Main():
         
         with open(ip_file, 'w') as ipFile:
             ipFile.write(ip)
+
+        with open("ip_log", 'a') as log_file:
+            now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            log_file.write(f"{now}: IP changed to {ip}\n")
 
 if __name__ == "__main__":
     Main()
