@@ -16,7 +16,6 @@ def Main():
     ip = get("https://api.ipify.org/").text
     cur_ip = ""
 
-    
     if not path.exists(ip_file):
         f = open(ip_file, 'w')
         f.close()
@@ -45,4 +44,10 @@ def Main():
             log_file.write(f"{now}: IP changed to {ip}\n")
 
 if __name__ == "__main__":
+    from datetime import datetime
+
     Main()
+
+    with open("last_run", 'w') as run_file:
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        run_file.write(f"Last run: {now}")
