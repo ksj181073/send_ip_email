@@ -2,7 +2,7 @@ def Main():
     """
     Checks to see if the public IP has changed and alerts by email if this is the case
     """
-    from gmail_account import USER, PASSWORD, PROVIDER
+    from gmail_account import USER, PASSWORD, PROVIDER, TO
     from requests import get
 
     from smtplib import SMTP_SSL
@@ -35,7 +35,7 @@ def Main():
         with SMTP_SSL(svr, port, context=cnt) as server:
             server.login(user=USER, password=PASSWORD)
             from_address = f"{USER}{PROVIDER}"
-            to_address = f"{USER}+server{PROVIDER}"
+            to_address = f"{TO}+server{PROVIDER}"
 
             server.sendmail(from_addr=from_address, to_addrs=to_address, msg=msg)
         
