@@ -51,6 +51,9 @@ if __name__ == "__main__":
 
     Main()
 
+    """
+    Overwrites the last run log
+    """
     with open("last_run", 'w') as run_file:
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         run_file.write(f"Last run: {now}\n")
