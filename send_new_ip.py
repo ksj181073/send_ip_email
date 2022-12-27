@@ -1,4 +1,7 @@
 def Main():
+    """
+    Checks to see if the public IP has changed and alerts by email if this is the case
+    """
     from gmail_account import USER, PASSWORD, PROVIDER
     from requests import get
 
