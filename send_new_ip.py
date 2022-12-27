@@ -31,13 +31,18 @@ def Main():
         Your IP has changed to {ip}"""
 
         cnt = create_default_context()
+        
+        try:
+            with SMTP_SSL(svr, port, context=cnt) as server:
+                server.login(user=USER, password=PASSWORD)
+                from_address = f"{USER}{PROVIDER}"
+                to_address = f"{TO}+server{PROVIDER}"
 
-        with SMTP_SSL(svr, port, context=cnt) as server:
-            server.login(user=USER, password=PASSWORD)
-            from_address = f"{USER}{PROVIDER}"
-            to_address = f"{TO}+server{PROVIDER}"
-
-            server.sendmail(from_addr=from_address, to_addrs=to_address, msg=msg)
+                server.sendmail(from_addr=from_address, to_addrs=to_address, msg=msg)
+        except Exception as err:
+            with open("ip_log", 'a') as log_file:
+                now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+                log_file.write(f"{now}: ERROR - {err}\n")
         
         with open(ip_file, 'w') as ipFile:
             ipFile.write(ip)
