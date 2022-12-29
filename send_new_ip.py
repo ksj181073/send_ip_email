@@ -27,7 +27,12 @@ def Main():
     with open(ip_file, 'r') as ipFile:
         cur_ip = ipFile.read()
 
-    if ip != cur_ip:
+    if ip == "Bad Gateway":
+        with open("ip_log", 'a') as log_file:
+            now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            log_file.write(f"{now}: ERROR - api.ipify.org returned 'Bad Gateway'\n"
+
+    elif ip != cur_ip:
         from_address = f"{USER}{PROVIDER}"
         to_address = [f"{TO}+server{PROVIDER}"]
 
